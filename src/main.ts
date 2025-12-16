@@ -1,0 +1,23 @@
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  // // Activation de la validation
+  // app.useGlobalPipes(new ValidationPipe());
+  // // Activation de Swagger
+  // const doc = SwaggerModule.createDocument(
+  //   app,
+  //   new DocumentBuilder()
+  //     .setTitle('Pizza API')
+  //     .setDescription('Une API de démonstration pour MyDigitalSchool')
+  //     .setVersion('1.0')
+  //     .addTag('Pizza')
+  //     .build(),
+  // );
+  // SwaggerModule.setup('docs', app, doc);
+
+  // Ecoute du port
+  await app.listen(process.env.PORT ?? 3000);
+}
+bootstrap();
