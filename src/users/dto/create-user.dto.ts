@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { IsDefined, IsEmail, IsNotEmpty } from 'class-validator';
-import { Role } from '../entities/user.entity';
+import { Role } from '../enums/role.enum';
 
 export class CreateUserDto {
   @IsEmail()

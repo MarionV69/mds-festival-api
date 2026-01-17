@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -15,11 +16,12 @@ export class UsersService {
   constructor(@InjectRepository(User) private users: Repository<User>) {}
   $;
 
-  async create(createUserDto: CreateUserDto) {
+  async create(dto: CreateUserDto): Promise<User> {
     try {
-      const salt = process.env['HASH_SALT'] || 12;
-      const hash = await bcrypt.hash(createUserDto.password, salt);
-      return this.users.save({ ...createUserDto, hash });
+      const salt = Number(process.env['HASH_SALT'] ?? 12);
+      const { password, ...rest } = dto;
+      const hash = await bcrypt.hash(password, salt);
+      return this.users.save({ ...rest, hash });
     } catch {
       throw new ConflictException();
     }
@@ -35,11 +37,30 @@ export class UsersService {
     return found;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async findByEmail(email: string): Promise<User> {
+    const found = await this.users.findOneBy({ email });
+    if (!found) throw new NotFoundException();
+    return found;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async update(id: number, dto: UpdateUserDto): Promise<User> {
+    if (!dto.password)
+      throw new BadRequestException('Password is needed to update a user');
+    try {
+      const salt = Number(process.env['HASH_SALT'] ?? 12);
+      const hash = await bcrypt.hash(dto.password, salt);
+      delete dto.password;
+      await this.users.update(id, { ...dto, hash });
+      return this.findOne(id);
+    } catch (error) {
+      throw error instanceof NotFoundException
+        ? error
+        : new ConflictException();
+    }
+  }
+
+  async remove(id: number): Promise<void> {
+    const done = await this.users.delete(id);
+    if (done.affected != 1) throw new NotFoundException();
   }
 }

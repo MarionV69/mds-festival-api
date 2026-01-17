@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Edition } from './edition.entity';
 import { Scene } from './scene.entity';
-import { Artist } from 'src/artists/entities/artist.entity';
+import { Artist } from '../../artists/entities/artist.entity';
 
 @Entity()
 export class Event {

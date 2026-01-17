@@ -1,5 +1,5 @@
-import { Scene } from 'src/editions/entities/scene.entity';
-import { Stand } from 'src/editions/entities/stand.enity';
+import { Scene } from '../../editions/entities/scene.entity';
+import { Stand } from '../../editions/entities/stand.entity';
 import {
   Column,
   Entity,

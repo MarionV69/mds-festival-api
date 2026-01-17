@@ -1,35 +1,17 @@
-import { Festivalier } from 'src/festivaliers/entities/festivalier.entity';
-import {
-  Column,
-  Entity,
-  Index,
-  JoinTable,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-
-export enum Role {
-  Admin = 'ADMIN',
-  Staff = 'STAFF',
-  Guest = 'GUEST',
-  Trader = 'TRADER',
-  Performer = 'PERFORMER',
-  Spectator = 'SPECTATOR',
-}
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Role } from '../enums/role.enum';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn({ name: 'id_user' })
   id: number;
 
-  @OneToOne(() => Festivalier)
-  @JoinTable()
-  festivalier: Festivalier;
-
   @Index({ unique: true })
   @Column({ length: 150 })
   email: string;
 
+  @Exclude()
   @Index()
   @Column({ length: 150 })
   hash: string;

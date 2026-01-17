@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 export enum Status {
   CHILD = 'child',
@@ -13,4 +20,8 @@ export class Festivalier {
 
   @Column({ type: 'enum', enum: Status })
   status: Status;
+
+  @OneToOne(() => User)
+  @JoinTable()
+  user: User;
 }

@@ -1,4 +1,4 @@
-import { Edition } from 'src/editions/entities/edition.entity';
+import { Edition } from '../../editions/entities/edition.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Place } from './place.entity';
 

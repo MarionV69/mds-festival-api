@@ -9,10 +9,10 @@ import {
 } from 'typeorm';
 import { Festival } from './festival.entity';
 import { Event } from './event.entity';
-import { Site } from 'src/sites/entities/site.entity';
-import { Stand } from './stand.enity';
+import { Site } from '../../sites/entities/site.entity';
+import { Stand } from './stand.entity';
 import { Scene } from './scene.entity';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Edition {
@@ -39,8 +39,8 @@ export class Edition {
   users: User[];
 
   @Column({ type: 'datetime' })
-  debut: Date;
+  start: Date;
 
   @Column({ type: 'int' })
-  nb_jours: number;
+  days_number: number;
 }

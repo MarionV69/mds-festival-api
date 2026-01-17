@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Edition } from './edition.entity';
-import { Place } from 'src/sites/entities/place.entity';
+import { Place } from '../../sites/entities/place.entity';
 
 @Entity()
 export class Stand {
