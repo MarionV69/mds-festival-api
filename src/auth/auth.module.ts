@@ -4,10 +4,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { JwtModule } from '@nestjs/jwt';
+import { MyBasicStrategy } from './security/strategies/my-basic.strategy';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
+    PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'banane',
       signOptions: {
@@ -16,6 +19,6 @@ import { JwtModule } from '@nestjs/jwt';
     }),
   ],
   controllers: [TokenController],
-  providers: [UsersService],
+  providers: [UsersService, MyBasicStrategy],
 })
 export class AuthModule {}
